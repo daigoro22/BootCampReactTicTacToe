@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import GameBoard from './tic-tac-toe/GameBoard'
+import {GameBoard} from './tic-tac-toe/GameBoard'
 
 function App() {
 

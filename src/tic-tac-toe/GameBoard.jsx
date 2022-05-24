@@ -1,33 +1,29 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { FilledByProvider, FilledByContext } from '../providers/FilledByProvider'
+import {Box} from './Box'
 
-import Box from './Box'
+const players = ["○","✗"]
 
-function getNextPlayer (currentPlayer){
-  return (currentPlayer=="○")?"✗":"○"
+export const getCurrentPlayer = (pNum)=>{
+  if(pNum>players.length-1){
+    return players[pNum%players.length]
+  }else{
+    return players[pNum]
+  }
 }
 
-function GameBoard() {
-  const filledBy = useContext(FilledByContext)
-  const [currentPlayer, setCurrentPlayer] = useState("○")
-  
-  {/*
-  useEffect(
-    setCurrentPlayer(getNextPlayer(currentPlayer))
-  ,[filledBy])
-  */}
-
+export const GameBoard = ()=> {
   return (
     <table>
       <tbody>
         <tr>
         <FilledByProvider playerSize={2}>
-          <Box filledByIndex={0} currentPlayer={currentPlayer}></Box>
+          <Box filledByIndex={0}></Box>
+          <Box filledByIndex={1}></Box>
+          <Box filledByIndex={2}></Box>
         </FilledByProvider>
         </tr>
       </tbody>
     </table>
     )
 }
-
-export default GameBoard
