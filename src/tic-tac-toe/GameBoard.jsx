@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useState } from 'react'
 import { FilledByProvider, FilledByContext } from '../providers/FilledByProvider'
 import {Box} from './Box'
 
-const players = ["○","✗"]
+const players = ["○","✗"]//TODO: プレイヤーが選択できるようにする
+const boxSize = 5 //TODO: プレイヤーが選択できるようにする
 
 export const getCurrentPlayer = (pNum)=>{
   if(pNum>players.length-1){
@@ -13,16 +14,21 @@ export const getCurrentPlayer = (pNum)=>{
 }
 
 export const GameBoard = ()=> {
+  const indexArray = Array(boxSize).fill("")
+
   return (
     <table>
       <tbody>
-        <tr>
-        <FilledByProvider playerSize={2}>
-          <Box filledByIndex={0}></Box>
-          <Box filledByIndex={1}></Box>
-          <Box filledByIndex={2}></Box>
+      <FilledByProvider boxSize={boxSize}>
+        {indexArray.map((_,ir)=>{
+          return (
+            <tr>{indexArray.map((_,id)=>{
+              return <Box filledByIndex={ir*boxSize+id}></Box>
+            })}
+            </tr>
+          )
+        })}
         </FilledByProvider>
-        </tr>
       </tbody>
     </table>
     )

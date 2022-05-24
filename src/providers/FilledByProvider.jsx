@@ -4,9 +4,9 @@ export const FilledByContext = createContext({});
 
 export const FilledByProvider = (props) => {
   // 何でも囲めるようにPropsとしてchildrenを受け取るようにする。
-  const { children, playerSize } = props;
+  const { children, boxSize } = props;
 
-  const [filledBy, setFilledBy] = useState(Array(9).fill("　"))
+  const [filledBy, setFilledBy] = useState(Array(boxSize**2).fill("　"))
   const [currentPlayerNum, setCurrentPlayerNum] = useState(0)
 
   return (
