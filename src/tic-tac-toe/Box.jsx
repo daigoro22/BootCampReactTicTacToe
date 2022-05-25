@@ -3,7 +3,7 @@ import { FilledByContext } from '../providers/FilledByProvider'
 import { getCurrentPlayer } from './GameBoard'
 
 export const Box = (props) => {
-  const {filledBy, setFilledBy, currentPlayerNum, setCurrentPlayerNum} = useContext(FilledByContext)
+  const {filledBy, setFilledBy, currentPlayerNum, setCurrentPlayerNum,winner,setWinner} = useContext(FilledByContext)
   const {filledByIndex} = props
 
   const fill = ()=>{
@@ -13,7 +13,7 @@ export const Box = (props) => {
     filledBy.splice(filledByIndex,1,currentPlayer)
     setFilledBy(filledBy)
   */}
-    if(filledBy[filledByIndex]!="　"){
+    if(filledBy[filledByIndex]!="　"||winner!=""){
       return
     }
     const filled = Array.from(filledBy)

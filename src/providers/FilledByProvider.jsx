@@ -8,11 +8,12 @@ export const FilledByProvider = (props) => {
 
   const [filledBy, setFilledBy] = useState(Array(boxSize**2).fill("　"))
   const [currentPlayerNum, setCurrentPlayerNum] = useState(0)
+  const [winner, setWinner] = useState("")
 
   return (
     // AdminFlagContextには、Providerが用意されているのを返却する。
     // valueの中にグローバルに扱う実際の値を設定する
-    <FilledByContext.Provider value={{filledBy,setFilledBy,currentPlayerNum,setCurrentPlayerNum}}>
+    <FilledByContext.Provider value={{filledBy,setFilledBy,currentPlayerNum,setCurrentPlayerNum, winner, setWinner}}>
       {children}
     </FilledByContext.Provider>
   );
