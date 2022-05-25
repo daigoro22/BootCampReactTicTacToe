@@ -1,5 +1,8 @@
 import {React,useContext} from 'react'
 import { FilledByContext } from '../providers/FilledByProvider'
+import { FormControl, InputGroup } from 'react-bootstrap'
+import { DropdownButton } from 'react-bootstrap'
+import DropdownItem from 'react-bootstrap/esm/DropdownItem'
 
 export const PlayerSelector = (props) =>{
   const {players} = props
@@ -14,16 +17,17 @@ export const PlayerSelector = (props) =>{
 
   return (
     <div>
-    <p>先行プレイヤー</p>
+    <InputGroup>
+    <DropdownButton variant="outline-primary" title="先攻プレイヤーを選択">
     {
     players.map(
       (p,i)=>{return (
-        <div>
-          <input type="radio" id={p} value={p} name="players" onClick={()=>selectorOnClick(i)} defaultChecked={i==0}></input>
-          <label>{p}</label>
-          </div>)
+          <DropdownItem onClick={()=>selectorOnClick(i)}>{p}</DropdownItem>
+        )
         })
     }
+    </DropdownButton>
+    </InputGroup>
     </div>
   )
 }
