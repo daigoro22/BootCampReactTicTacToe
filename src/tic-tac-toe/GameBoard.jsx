@@ -21,14 +21,27 @@ function makeIndices(size,func){
   )
 }
 
-function judgeWinner(boxes){
-  return boxes.map(
+function judgeWinner(toBoxFunc){
+  const boxes = [
+    makeIndices(boxSize,(ir,ic)=>ir*boxSize+ic).map(toBoxFunc), //行ごとのマスの値
+    makeIndices(boxSize,(ir,ic)=>ic*boxSize+ir).map(toBoxFunc), //列ごとのマスの値
+    [Array(boxSize).fill("").map((_,i)=>i*(boxSize+1))].map(toBoxFunc), // 対角要素のマスの値
+    [Array(boxSize).fill("").map((_,i)=>i*(boxSize-1)+(boxSize-1))].map(toBoxFunc) // 逆の対角要素のマスの値
+  ]
+
+  const w =  boxes.map(
     arrs=>arrs.map(
       arr=>arr.reduce(
         (p,c)=>(c==p)?c:"　") // 全て同じだった場合の要素
       ).filter(
         v=>v!="　")).filter( // 空白マスは除く
           arr=>arr.length>0)[0]
+
+    if(w!=undefined){//勝者が決まった場合
+      return w
+    }
+
+    return (boxes[0].every(arr=>arr.filter(v=>v!="　").length==boxSize))?"引き分け":undefined
 }
 
 export const GameBoard = ()=> {
@@ -38,20 +51,21 @@ export const GameBoard = ()=> {
   const toFilledBy = arr=>arr.map(i=>filledBy[i])
 
   useEffect(()=>{
-    const allBoxesToBeJudged = [
-      makeIndices(boxSize,(ir,ic)=>ir*boxSize+ic).map(toFilledBy), //行ごとのマスの値
-      makeIndices(boxSize,(ir,ic)=>ic*boxSize+ir).map(toFilledBy), //列ごとのマスの値
-      [Array(boxSize).fill("").map((_,i)=>i*(boxSize+1))].map(toFilledBy), // 対角要素のマスの値
-      [Array(boxSize).fill("").map((_,i)=>i*(boxSize-1)+(boxSize-1))].map(toFilledBy) // 逆の対角要素のマスの値
-    ]
+    const w = judgeWinner(toFilledBy)
 
-    const w = judgeWinner(allBoxesToBeJudged)
     if(w!=undefined){
       setWinner(w)// GameBoard の中で更新すると無限ループになるので、コンポーネントがレンダリングされた後で setState する必要がある
     }
   },[currentPlayerNum])// プレイヤーが変わった時のみ呼び出す
 
-  const gameStatusMessage = (winner!="")?`${winner}さんの勝利です`:`${getCurrentPlayer(currentPlayerNum)}さんの番です`
+  let gameStatusMessage = `${getCurrentPlayer(currentPlayerNum)}さんの番です`
+  if(winner==""){
+    gameStatusMessage = `${getCurrentPlayer(currentPlayerNum)}さんの番です`
+  }else if(winner!="引き分け"){
+    gameStatusMessage = `${winner}さんの勝利です`
+  }else{
+    gameStatusMessage = "引き分けです"
+  }
 
   return (
     <div>
