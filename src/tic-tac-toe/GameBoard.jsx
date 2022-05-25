@@ -94,7 +94,7 @@ export const GameBoard = ()=> {
             return (
               <tr>
                 {indexArray.map((_,id)=>{
-                  return <Box filledByIndex={ir*boxSize+id}></Box>
+                  return <Box filledByIndex={ir*boxSize+id}/>
                 })}
               </tr>
             )

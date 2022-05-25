@@ -3,7 +3,7 @@ import {FilledByProvider} from './providers/FilledByProvider'
 import {PlayerSelector} from './tic-tac-toe/PlayerSelector'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-export const players = ["💩","😭"]//TODO: プレイヤーが選択できるようにする
+export const players = ["😡","😭"]//TODO: プレイヤーが選択できるようにする
 export const boxSize = 3//TODO: プレイヤーが選択できるようにする
 
 function App() {
@@ -11,8 +11,8 @@ function App() {
   return (
     <div className="App">
       <FilledByProvider boxSize={boxSize}>
-      <PlayerSelector players={players}></PlayerSelector>
-      <GameBoard></GameBoard>
+      <PlayerSelector players={players}/>
+      <GameBoard/>
       </FilledByProvider>
     </div>
   )
