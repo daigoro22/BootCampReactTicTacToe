@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react'
 import { FilledByContext } from '../providers/FilledByProvider'
 import {Box} from './Box'
 import {players, boxSize} from '../App'
+import Table from 'react-bootstrap/Table'
+import Button from 'react-bootstrap/Button'
 
 export const getCurrentPlayer = (pNum)=>{
   if(pNum>players.length-1){
@@ -58,7 +60,7 @@ export const GameBoard = ()=> {
     }
   },[currentPlayerNum])// プレイヤーが変わった時のみ呼び出す
 
-  let gameStatusMessage = `${getCurrentPlayer(currentPlayerNum)}さんの番です`
+  let gameStatusMessage = ""
   if(winner==""){
     gameStatusMessage = `${getCurrentPlayer(currentPlayerNum)}さんの番です`
   }else if(winner!="引き分け"){
@@ -84,9 +86,9 @@ export const GameBoard = ()=> {
 
   return (
     <div>
-      <button onClick={startButtonOnClick}>{(!isStarted)?"ゲームスタート":"リセット"}</button>
+      <Button variant="outline-primary" onClick={startButtonOnClick}>{(!isStarted)?"ゲームスタート":"リセット"}</Button>
       <p>{gameStatusMessage}</p>
-      <table>
+      <Table  bordered hover>
         <tbody>
           {indexArray.map((_,ir)=>{
             return (
@@ -98,7 +100,7 @@ export const GameBoard = ()=> {
             )
           })}
         </tbody>
-      </table>
+      </Table>
     </div>
     )
 }
