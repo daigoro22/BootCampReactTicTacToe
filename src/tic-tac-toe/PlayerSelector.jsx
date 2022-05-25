@@ -3,7 +3,14 @@ import { FilledByContext } from '../providers/FilledByProvider'
 
 export const PlayerSelector = (props) =>{
   const {players} = props
-  const {filledBy, setFilledBy, currentPlayerNum, setCurrentPlayerNum,winner,setWinner} = useContext(FilledByContext)
+  const {setCurrentPlayerNum,isStarted} = useContext(FilledByContext)
+
+  const selectorOnClick = (i)=>{
+    if(isStarted){
+      return
+    }
+    setCurrentPlayerNum(i)
+  }
 
   return (
     <div>
@@ -12,7 +19,7 @@ export const PlayerSelector = (props) =>{
     players.map(
       (p,i)=>{return (
         <div>
-          <input type="radio" id={p} value={p} name="players" onClick={()=>setCurrentPlayerNum(i)}></input>
+          <input type="radio" id={p} value={p} name="players" onClick={()=>selectorOnClick(i)} defaultChecked={i==0}></input>
           <label>{p}</label>
           </div>)
         })

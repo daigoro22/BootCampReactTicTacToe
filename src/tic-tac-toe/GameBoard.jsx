@@ -46,7 +46,7 @@ function judgeWinner(toBoxFunc){
 
 export const GameBoard = ()=> {
   const indexArray = Array(boxSize).fill("")
-  const {filledBy, setFilledBy, currentPlayerNum, setCurrentPlayerNum,winner,setWinner} = useContext(FilledByContext)
+  const {filledBy, setFilledBy, currentPlayerNum, setCurrentPlayerNum,winner,setWinner,isStarted,setIsStarted} = useContext(FilledByContext)
 
   const toFilledBy = arr=>arr.map(i=>filledBy[i])
 
@@ -67,8 +67,24 @@ export const GameBoard = ()=> {
     gameStatusMessage = "引き分けです"
   }
 
+  const resetGame=()=>{
+    setFilledBy(Array(boxSize**2).fill("　"))
+    setCurrentPlayerNum(0)
+    setWinner("")
+    setIsStarted(false)
+  }
+
+  const startButtonOnClick=()=>{
+    if(isStarted){
+      resetGame()
+      return
+    }
+    setIsStarted(true)
+  }
+
   return (
     <div>
+      <button onClick={startButtonOnClick}>{(!isStarted)?"ゲームスタート":"リセット"}</button>
       <p>{gameStatusMessage}</p>
       <table>
         <tbody>
